@@ -1,0 +1,5 @@
+../Drivers/Src/stm32f446xx_gpio.c:6:1:GPIO_init	4
+../Drivers/Src/stm32f446xx_gpio.c:50:1:GPIO_deinit	9
+../Drivers/Src/stm32f446xx_gpio.c:71:1:GPIO_write_pin	1
+../Drivers/Src/stm32f446xx_gpio.c:80:1:GPIO_read_pin	1
+../Drivers/Src/stm32f446xx_gpio.c:86:1:GPIO_clk_control	18
