@@ -10,6 +10,11 @@ typedef enum {
 	GPIO_OUTPUT,
 	GPIO_ALT_FUNCTION,
 	GPIO_ANALOG,
+  GPIO_EXTI_IT_RISING,
+  GPIO_EXTI_IT_FALLING,
+  GPIO_EXTI_IT_RISING_FALLING = GPIO_EXTI_IT_RISING | GPIO_EXTI_IT_FALLING,
+  GPIO_EXTI_EVT_RISING,
+  GPIO_EXTI_EVT_FALLING,
 } GPIO_mode_t;
 
 typedef enum {
@@ -65,5 +70,8 @@ GPIO_irq_config(void);
 
 void
 GPIO_irq_handling(void);
+
+uint8_t
+GPIO_EXTI_port_value(GPIO_t* GPIO_port);
 
 #endif

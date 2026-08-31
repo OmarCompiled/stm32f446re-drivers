@@ -53,19 +53,51 @@ typedef struct {
   __IO uint32_t BSRR;    // GPIO port bit set/reset register;       offset: 0x18
   __IO uint32_t LCKR;    // GPIO port configuration lock register   offset: 0x1C
   __IO uint32_t
-      AFR[2]; // GPIO port alternate function registers  offset: 0x20 - 0x24
+    AFR[2]; // GPIO port alternate function registers  offset: 0x20 - 0x24
 } GPIO_t;     // GPIO registers struct type
+
+typedef struct {
+  __IO uint32_t MEMRMP;
+  __IO uint32_t PMC;
+  __IO uint32_t EXTICR[4];
+  uint32_t __reserved0[2];
+  __IO uint32_t CMPCR;
+  uint32_t __reserved1[2];
+  __IO uint32_t CFGR;
+} SYSCFG_t;
+
+typedef struct {
+  __IO uint32_t IMR;    // EXTI interrupt mask register;            offset: 0x00
+  __IO uint32_t EMR;    // EXTI event mask register;                offset: 0x04
+  __IO uint32_t RTSR;   // EXTI rising trigger selection register;  offset: 0x08
+  __IO uint32_t FTSR;   // EXTI falling trigger selection register; offset: 0x0C
+  __IO uint32_t SWIER;  // EXTI software interrupt event register;  offset: 0x10
+  __IO uint32_t PR;     // EXTI pending register;                   offset: 0x14
+} EXTI_t;
 
 // typedef struct {
 //
 // } TIM_t;
 
+typedef struct {
+  __IO uint32_t CR1;
+  __IO uint32_t CR2;
+  __IO uint32_t OAR1;
+  __IO uint32_t OAR2;
+  __IO uint32_t DR;
+  __IO uint32_t SR1;
+  __IO uint32_t SR2;
+  __IO uint32_t CCR;
+  __IO uint32_t TRISE;
+  __IO uint32_t FLTR;
+} I2C_t;
+
 /*
  * Memory base address definitions
  */
 
-#define FLASH_BASE 0x08000000U // Main memory; up to 512 kB
-#define ROM_BASE 0x1FFF0000U   // System memory; up to 30 kB
+#define FLASH_BASE 0x08000000U // Main memory;    up to 512 kB
+#define ROM_BASE 0x1FFF0000U   // System memory;  up to 30 kB
 #define SRAM1_BASE 0x20000000U // SRAM1; aliased; up to 112 kB
 #define SRAM2_BASE 0x2001C000U // SRAM2; aliased; up to 16 kB
 #define SRAM_BASE SRAM1_BASE
@@ -137,6 +169,12 @@ typedef struct {
 
 #define RCC ((RCC_t *)RCC_BASE)
 
+#define EXTI ((EXTI_t*)EXTI_BASE)
+
+#define SYSCFG ((SYSCFG_t*)SYSCFG_BASE)
+
+#define RCC_APB2ENR_SYSCFGEN (0x1U << 14)
+
 /*
  * RCC GPIO bit definitions
  */
@@ -182,6 +220,9 @@ typedef struct {
 #define RCC_APB1ENR_UART4EN (0x1U << 19)
 #define RCC_APB1ENR_UART5EN (0x1U << 20)
 #define RCC_APB2ENR_USART6EN (0x1U << 5)
+
+#define RCC_SYSCFG_CLK_ENABLE() SET_BIT(RCC->APB2ENR, RCC_APB2ENR_SYSCFGEN)
+#define RCC_SYSCFG_CLK_DISABLE() CLEAR_BIT(RCC->APB2ENR, RCC_APB2ENR_SYSCFGEN)
 
 /*
  * RCC GPIO Clock enable macro definitions
