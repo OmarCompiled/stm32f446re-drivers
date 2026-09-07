@@ -53,7 +53,7 @@ typedef struct {
   __IO uint32_t BSRR;    // GPIO port bit set/reset register;       offset: 0x18
   __IO uint32_t LCKR;    // GPIO port configuration lock register   offset: 0x1C
   __IO uint32_t
-    AFR[2]; // GPIO port alternate function registers  offset: 0x20 - 0x24
+      AFR[2]; // GPIO port alternate function registers  offset: 0x20 - 0x24
 } GPIO_t;     // GPIO registers struct type
 
 typedef struct {
@@ -67,12 +67,12 @@ typedef struct {
 } SYSCFG_t;
 
 typedef struct {
-  __IO uint32_t IMR;    // EXTI interrupt mask register;            offset: 0x00
-  __IO uint32_t EMR;    // EXTI event mask register;                offset: 0x04
-  __IO uint32_t RTSR;   // EXTI rising trigger selection register;  offset: 0x08
-  __IO uint32_t FTSR;   // EXTI falling trigger selection register; offset: 0x0C
-  __IO uint32_t SWIER;  // EXTI software interrupt event register;  offset: 0x10
-  __IO uint32_t PR;     // EXTI pending register;                   offset: 0x14
+  __IO uint32_t IMR;   // EXTI interrupt mask register;            offset: 0x00
+  __IO uint32_t EMR;   // EXTI event mask register;                offset: 0x04
+  __IO uint32_t RTSR;  // EXTI rising trigger selection register;  offset: 0x08
+  __IO uint32_t FTSR;  // EXTI falling trigger selection register; offset: 0x0C
+  __IO uint32_t SWIER; // EXTI software interrupt event register;  offset: 0x10
+  __IO uint32_t PR;    // EXTI pending register;                   offset: 0x14
 } EXTI_t;
 
 // typedef struct {
@@ -169,9 +169,9 @@ typedef struct {
 
 #define RCC ((RCC_t *)RCC_BASE)
 
-#define EXTI ((EXTI_t*)EXTI_BASE)
+#define EXTI ((EXTI_t *)EXTI_BASE)
 
-#define SYSCFG ((SYSCFG_t*)SYSCFG_BASE)
+#define SYSCFG ((SYSCFG_t *)SYSCFG_BASE)
 
 #define RCC_APB2ENR_SYSCFGEN (0x1U << 14)
 
