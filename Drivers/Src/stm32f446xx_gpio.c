@@ -2,8 +2,7 @@
 
 #define GPIO_COUNT 16U
 
-void
-GPIO_init(GPIO_t* GPIO_port, GPIO_init_t* GPIO_init) {
+void GPIO_init(GPIO_t *GPIO_port, GPIO_init_t *GPIO_init) {
   uint32_t temp = 0x00U;
   uint32_t position = 0x00U;
   uint32_t io_current = 0x00U;
@@ -22,24 +21,25 @@ GPIO_init(GPIO_t* GPIO_port, GPIO_init_t* GPIO_init) {
         GPIO_port->MODER = temp;
       } else {
         switch (GPIO_init->GPIO_pin_mode) {
-          case GPIO_EXTI_IT_RISING:
-            EXTI->FTSR &= ~(0x1U << position);
-            EXTI->RTSR |= (0x1U << position);
-            break;
-          case GPIO_EXTI_IT_FALLING:
-            EXTI->RTSR &= ~(0x1U << position);
-            EXTI->FTSR |= (0x1U << position);
-            break;
-          case GPIO_EXTI_IT_RISING_FALLING:
-            EXTI->RTSR |= (0x1U << position);
-            EXTI->FTSR |= (0x1U << position);
-            break;
-          default:
-            break;
+        case GPIO_EXTI_IT_RISING:
+          EXTI->FTSR &= ~(0x1U << position);
+          EXTI->RTSR |= (0x1U << position);
+          break;
+        case GPIO_EXTI_IT_FALLING:
+          EXTI->RTSR &= ~(0x1U << position);
+          EXTI->FTSR |= (0x1U << position);
+          break;
+        case GPIO_EXTI_IT_RISING_FALLING:
+          EXTI->RTSR |= (0x1U << position);
+          EXTI->FTSR |= (0x1U << position);
+          break;
+        default:
+          break;
         }
         // syscfg_exticr setup
         temp = position / 4;
-        SYSCFG->EXTICR[temp] = (GPIO_EXTI_port_value(GPIO_port) << (4 * (position % 4)));
+        SYSCFG->EXTICR[temp] =
+            (GPIO_EXTI_port_code(GPIO_port) << (4 * (position % 4)));
 
         EXTI->IMR |= (0x1U << position);
       }
@@ -63,15 +63,15 @@ GPIO_init(GPIO_t* GPIO_port, GPIO_init_t* GPIO_init) {
       if (GPIO_init->GPIO_pin_mode == GPIO_ALT_FUNCTION) {
         temp = GPIO_port->AFR[position >> 3U];
         temp &= ~(0xFU << (((uint32_t)position & 0x7U) * 4U));
-        temp |= (GPIO_init->GPIO_pin_alt_function << (((uint32_t)position & 0x7U) * 4U));
+        temp |= (GPIO_init->GPIO_pin_alt_function
+                 << (((uint32_t)position & 0x7U) * 4U));
         GPIO_port->AFR[position >> 3U] = temp;
       }
     }
   }
 }
 
-void
-GPIO_deinit(GPIO_t* GPIO_port) {
+void GPIO_deinit(GPIO_t *GPIO_port) {
   if (GPIO_port == GPIOA) {
     RCC_GPIOA_RESET();
   } else if (GPIO_port == GPIOB) {
@@ -91,8 +91,7 @@ GPIO_deinit(GPIO_t* GPIO_port) {
   }
 }
 
-void
-GPIO_write_pin(GPIO_t* GPIO_port, uint8_t pin_number, uint8_t pin_state) {
+void GPIO_write_pin(GPIO_t *GPIO_port, uint8_t pin_number, uint8_t pin_state) {
   uint32_t temp = 0x00U;
   temp = GPIO_port->ODR;
   temp &= ~(0x1U << pin_number);
@@ -100,55 +99,52 @@ GPIO_write_pin(GPIO_t* GPIO_port, uint8_t pin_number, uint8_t pin_state) {
   GPIO_port->ODR = temp;
 }
 
-uint8_t
-GPIO_read_pin(GPIO_t* GPIO_port, uint8_t pin_number) {
+uint8_t GPIO_read_pin(GPIO_t *GPIO_port, uint8_t pin_number) {
   uint16_t temp = GPIO_port->IDR >> pin_number; // 16 bits accessible in IDR;
   return (uint8_t)(temp & 0x1U);
 }
 
-void
-GPIO_clk_control(GPIO_t* GPIO_port, uint8_t enable) {
-  if (enable) {
-    if (GPIO_port == GPIOA) {
-      RCC_GPIOA_CLK_ENABLE();
-    } else if (GPIO_port == GPIOB) {
-      RCC_GPIOB_CLK_ENABLE();
-    } else if (GPIO_port == GPIOC) {
-      RCC_GPIOC_CLK_ENABLE();
-    } else if (GPIO_port == GPIOD) {
-      RCC_GPIOD_CLK_ENABLE();
-    } else if (GPIO_port == GPIOE) {
-      RCC_GPIOE_CLK_ENABLE();
-    } else if (GPIO_port == GPIOF) {
-      RCC_GPIOF_CLK_ENABLE();
-    } else if (GPIO_port == GPIOG) {
-      RCC_GPIOG_CLK_ENABLE();
-    } else if (GPIO_port == GPIOH) {
-      RCC_GPIOH_CLK_ENABLE();
-    }
-  } else {
-    if (GPIO_port == GPIOA) {
-      RCC_GPIOA_CLK_DISABLE();
-    } else if (GPIO_port == GPIOB) {
-      RCC_GPIOB_CLK_DISABLE();
-    } else if (GPIO_port == GPIOC) {
-      RCC_GPIOC_CLK_DISABLE();
-    } else if (GPIO_port == GPIOD) {
-      RCC_GPIOD_CLK_DISABLE();
-    } else if (GPIO_port == GPIOE) {
-      RCC_GPIOE_CLK_DISABLE();
-    } else if (GPIO_port == GPIOF) {
-      RCC_GPIOF_CLK_DISABLE();
-    } else if (GPIO_port == GPIOG) {
-      RCC_GPIOG_CLK_DISABLE();
-    } else if (GPIO_port == GPIOH) {
-      RCC_GPIOH_CLK_DISABLE();
-    }
+void GPIO_enable_clock(GPIO_t *GPIO_port) {
+  if (GPIO_port == GPIOA) {
+    RCC_GPIOA_CLK_ENABLE();
+  } else if (GPIO_port == GPIOB) {
+    RCC_GPIOB_CLK_ENABLE();
+  } else if (GPIO_port == GPIOC) {
+    RCC_GPIOC_CLK_ENABLE();
+  } else if (GPIO_port == GPIOD) {
+    RCC_GPIOD_CLK_ENABLE();
+  } else if (GPIO_port == GPIOE) {
+    RCC_GPIOE_CLK_ENABLE();
+  } else if (GPIO_port == GPIOF) {
+    RCC_GPIOF_CLK_ENABLE();
+  } else if (GPIO_port == GPIOG) {
+    RCC_GPIOG_CLK_ENABLE();
+  } else if (GPIO_port == GPIOH) {
+    RCC_GPIOH_CLK_ENABLE();
   }
 }
 
-uint8_t
-GPIO_EXTI_port_value(GPIO_t* GPIO_port) {
+void GPIO_disable_clock(GPIO_t *GPIO_port) {
+  if (GPIO_port == GPIOA) {
+    RCC_GPIOA_CLK_DISABLE();
+  } else if (GPIO_port == GPIOB) {
+    RCC_GPIOB_CLK_DISABLE();
+  } else if (GPIO_port == GPIOC) {
+    RCC_GPIOC_CLK_DISABLE();
+  } else if (GPIO_port == GPIOD) {
+    RCC_GPIOD_CLK_DISABLE();
+  } else if (GPIO_port == GPIOE) {
+    RCC_GPIOE_CLK_DISABLE();
+  } else if (GPIO_port == GPIOF) {
+    RCC_GPIOF_CLK_DISABLE();
+  } else if (GPIO_port == GPIOG) {
+    RCC_GPIOG_CLK_DISABLE();
+  } else if (GPIO_port == GPIOH) {
+    RCC_GPIOH_CLK_DISABLE();
+  }
+}
+
+uint8_t GPIO_EXTI_port_code(GPIO_t *GPIO_port) {
   if (GPIO_port == GPIOA) {
     return 0;
   } else if (GPIO_port == GPIOB) {

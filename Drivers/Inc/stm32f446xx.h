@@ -4,7 +4,37 @@
 #include "stm32f446xx_ex.h"
 #include <stdint.h>
 
+/*
+ *	Any value not used in functions or struct definitions
+ *	or used internally to a single file will be kept
+ *	as a #define.
+ *
+ *	Addresses are an exception.
+ */
+
 #define __IO volatile
+
+/* ARM M4 Cortex Specifics */
+/* Refer to Cortec-M4 Technical Reference Manual */
+#define NVIC_BASE 0xE000E100U
+
+typedef struct {
+  __IO uint32_t ISER[8]; // Interrupt Set-Enable Registers
+  uint32_t __reserved0[24];
+  __IO uint32_t ICER[8]; // Interrupt Clear-Enable Registers
+  uint32_t __reserved1[24];
+  __IO uint32_t ISPR[8]; // Interrupt Set-Pending Registers
+  uint32_t __reserved2[24];
+  __IO uint32_t ICPR[8]; // Interrupt Clear-Pending Registers
+  uint32_t __reserved3[24];
+  __IO uint32_t IABR[8]; // Interrupt Active-Bit Registers
+  uint32_t __reserved4[56];
+  __IO uint8_t IPR[240]; // Interrupt Priority Registers
+  uint32_t __reserved5[644];
+  __IO uint32_t STIR; // Software Trigger Interrupt Register
+} NVIC_t;
+
+#define NVIC ((NVIC_t *)NVIC_BASE)
 
 typedef struct {
   __IO uint32_t CR; // RCC control register; offset: 0x00
@@ -91,6 +121,19 @@ typedef struct {
   __IO uint32_t TRISE;
   __IO uint32_t FLTR;
 } I2C_t;
+
+/*
+ * IRQ position defintions
+ */
+typedef enum {
+  IRQ_EXTI0 = 6,
+  IRQ_EXTI1,
+  IRQ_EXTI2,
+  IRQ_EXTI3,
+  IRQ_EXTI4,
+  IRQ_EXTI9_5 = 23,
+  IRQ_EXTI15_10 = 40,
+} IRQ_t;
 
 /*
  * Memory base address definitions
@@ -335,5 +378,7 @@ typedef struct {
     SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOHEN);                              \
     CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOHEN);                            \
   } while (0)
+
+#include "stm32f446xx_nvic.h" // since the NVIC is a general peripheral
 
 #endif /* INC_STM32F446XX_H_ */

@@ -40,34 +40,26 @@ typedef struct {
   uint8_t GPIO_pin_alt_function;
 } GPIO_init_t;
 
-void
-GPIO_init(GPIO_t *GPIO_port, GPIO_init_t *pGPIO_init);
+void GPIO_init(GPIO_t *GPIO_port, GPIO_init_t *pGPIO_init);
 
-void
-GPIO_deinit(GPIO_t *GPIO_port);
+void GPIO_deinit(GPIO_t *GPIO_port);
 
-void
-GPIO_clk_control(GPIO_t *GPIO_port, uint8_t enable);
+void GPIO_enable_clock(GPIO_t *GPIO_port);
 
-uint8_t
-GPIO_read_pin(GPIO_t *GPIO_port, uint8_t pin_number);
+void GPIO_disable_clock(GPIO_t *GPIO_port)
 
-uint16_t
-GPIO_read_port(GPIO_t *GPIO_port);
+    uint8_t GPIO_read_pin(GPIO_t *GPIO_port, uint8_t pin_number);
 
-void
-GPIO_write_pin(GPIO_t *GPIO_port, uint8_t pin_number, uint8_t pin_state);
+uint16_t GPIO_read_port(GPIO_t *GPIO_port);
 
-void
-GPIO_write_port(GPIO_t *GPIO_port, uint16_t value);
+void GPIO_write_pin(GPIO_t *GPIO_port, uint8_t pin_number, uint8_t pin_state);
 
-void
-GPIO_irq_config(void);
+void GPIO_write_port(GPIO_t *GPIO_port, uint16_t value);
 
-void
-GPIO_irq_handling(void);
+void GPIO_config_IRQ(void);
 
-uint8_t
-GPIO_EXTI_port_value(GPIO_t *GPIO_port);
+void GPIO_handle_IRQ(void);
+
+uint8_t GPIO_EXTI_port_code(GPIO_t *GPIO_port);
 
 #endif

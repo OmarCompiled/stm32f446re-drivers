@@ -1,6 +1,6 @@
 ../Drivers/Src/stm32f446xx_gpio.c:6:1:GPIO_init	32	static
-../Drivers/Src/stm32f446xx_gpio.c:74:1:GPIO_deinit	16	static
-../Drivers/Src/stm32f446xx_gpio.c:95:1:GPIO_write_pin	24	static
-../Drivers/Src/stm32f446xx_gpio.c:104:1:GPIO_read_pin	24	static
-../Drivers/Src/stm32f446xx_gpio.c:110:1:GPIO_clk_control	16	static
-../Drivers/Src/stm32f446xx_gpio.c:151:1:GPIO_EXTI_port_value	16	static
+../Drivers/Src/stm32f446xx_gpio.c:76:1:GPIO_deinit	16	static
+../Drivers/Src/stm32f446xx_gpio.c:97:1:GPIO_write_pin	24	static
+../Drivers/Src/stm32f446xx_gpio.c:106:1:GPIO_read_pin	24	static
+../Drivers/Src/stm32f446xx_gpio.c:112:1:GPIO_clk_control	16	static
+../Drivers/Src/stm32f446xx_gpio.c:153:1:GPIO_EXTI_port_code	16	static
