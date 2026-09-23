@@ -13,7 +13,7 @@ void NVIC_disable_IRQ(IRQ_t IRQ) {
 		return;
 	}	
 
-	NVIC->ICER[IRQ / 32] |= (0x1U << (IRQ % 32));
+	NVIC->ICER[IRQ / 32] &= ~(0x1U << (IRQ % 32));
 }
 
 void NVIC_set_pending_IRQ(IRQ_t IRQ) {

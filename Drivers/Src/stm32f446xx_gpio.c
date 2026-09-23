@@ -163,3 +163,9 @@ uint8_t GPIO_EXTI_port_code(GPIO_t *GPIO_port) {
     return 7;
   }
 }
+
+void GPIO_handle_IRQ(uint8_t pin_number) {
+	if (EXTI->PR & (0x1U << pin_number)) {
+		EXTI->PR |= (0x1U << pin_number);
+	}	
+}

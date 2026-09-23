@@ -56,9 +56,7 @@ void GPIO_write_pin(GPIO_t *GPIO_port, uint8_t pin_number, uint8_t pin_state);
 
 void GPIO_write_port(GPIO_t *GPIO_port, uint16_t value);
 
-void GPIO_config_IRQ(void);
-
-void GPIO_handle_IRQ(void);
+void GPIO_handle_IRQ(uint8_t pin_number);
 
 uint8_t GPIO_EXTI_port_code(GPIO_t *GPIO_port);
 
