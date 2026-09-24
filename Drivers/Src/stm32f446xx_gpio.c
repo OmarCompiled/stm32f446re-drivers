@@ -37,6 +37,7 @@ void GPIO_init(GPIO_t *GPIO_port, GPIO_init_t *GPIO_init) {
           break;
         }
         // syscfg_exticr setup
+        RCC_SYSCFG_CLK_ENABLE();
         temp = position / 4;
         SYSCFG->EXTICR[temp] |=
             (GPIO_EXTI_port_code(GPIO_port) << (4 * (position % 4)));
@@ -166,6 +167,6 @@ uint8_t GPIO_EXTI_port_code(GPIO_t *GPIO_port) {
 
 void GPIO_handle_IRQ(uint8_t pin_number) {
 	if (EXTI->PR & (0x1U << pin_number)) {
-		EXTI->PR = (0x1U << pin_number);
+		EXTI->PR |= (0x1U << pin_number);
 	}
 }
