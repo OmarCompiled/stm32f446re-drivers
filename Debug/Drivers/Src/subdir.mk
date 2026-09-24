@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Drivers/Src/stm32f446xx_gpio.c 
+../Drivers/Src/stm32f446xx_gpio.c \
+../Drivers/Src/stm32f446xx_nvic.c 
 
 OBJS += \
-./Drivers/Src/stm32f446xx_gpio.o 
+./Drivers/Src/stm32f446xx_gpio.o \
+./Drivers/Src/stm32f446xx_nvic.o 
 
 C_DEPS += \
-./Drivers/Src/stm32f446xx_gpio.d 
+./Drivers/Src/stm32f446xx_gpio.d \
+./Drivers/Src/stm32f446xx_nvic.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Drivers/Src/%.o Drivers/Src/%.su Drivers/Src/%.cyclo: ../Drivers/Src/%.c Drivers
 clean: clean-Drivers-2f-Src
 
 clean-Drivers-2f-Src:
-	-$(RM) ./Drivers/Src/stm32f446xx_gpio.cyclo ./Drivers/Src/stm32f446xx_gpio.d ./Drivers/Src/stm32f446xx_gpio.o ./Drivers/Src/stm32f446xx_gpio.su
+	-$(RM) ./Drivers/Src/stm32f446xx_gpio.cyclo ./Drivers/Src/stm32f446xx_gpio.d ./Drivers/Src/stm32f446xx_gpio.o ./Drivers/Src/stm32f446xx_gpio.su ./Drivers/Src/stm32f446xx_nvic.cyclo ./Drivers/Src/stm32f446xx_nvic.d ./Drivers/Src/stm32f446xx_nvic.o ./Drivers/Src/stm32f446xx_nvic.su
 
 .PHONY: clean-Drivers-2f-Src
 

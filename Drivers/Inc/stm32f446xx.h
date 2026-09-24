@@ -123,19 +123,6 @@ typedef struct {
 } I2C_t;
 
 /*
- * IRQ position defintions
- */
-typedef enum {
-  IRQ_EXTI0 = 6,
-  IRQ_EXTI1,
-  IRQ_EXTI2,
-  IRQ_EXTI3,
-  IRQ_EXTI4,
-  IRQ_EXTI9_5 = 23,
-  IRQ_EXTI15_10 = 40,
-} IRQ_t;
-
-/*
  * Memory base address definitions
  */
 

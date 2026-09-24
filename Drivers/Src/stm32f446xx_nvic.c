@@ -32,7 +32,7 @@ void NVIC_clear_pending_IRQ(IRQ_t IRQ) {
 	NVIC->ICPR[IRQ / 32] |= (0x1U << (IRQ % 32));
 }
 
-void NVIC_set_priority_IRQ(IRQ_t IRQ) {
+void NVIC_set_priority_IRQ(IRQ_t IRQ, uint8_t priority) {
 	if (IRQ < 0) {
 		return;
 	}

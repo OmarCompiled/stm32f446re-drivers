@@ -25,8 +25,8 @@ main(void) {
   };
 
 
-  GPIO_clk_control(GPIOA, ENABLE);
-  GPIO_clk_control(GPIOC, ENABLE);
+	GPIO_enable_clock(GPIOA);
+	GPIO_enable_clock(GPIOB);
 
   GPIO_init(GPIOA, onboard_led);
   GPIO_init(GPIOC, push_button);

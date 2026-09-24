@@ -21,7 +21,7 @@ main(void) {
 		.GPIO_pin_speed = GPIO_HIGH_SPEED,
 	};
 
-	GPIO_clk_control(GPIOA, ENABLE);
+	GPIO_enable_clock(GPIOA);
 	GPIO_init(GPIOA, onboard_led);
 
 	while(1) {

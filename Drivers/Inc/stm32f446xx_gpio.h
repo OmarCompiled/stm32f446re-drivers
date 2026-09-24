@@ -46,9 +46,9 @@ void GPIO_deinit(GPIO_t *GPIO_port);
 
 void GPIO_enable_clock(GPIO_t *GPIO_port);
 
-void GPIO_disable_clock(GPIO_t *GPIO_port)
+void GPIO_disable_clock(GPIO_t *GPIO_port);
 
-    uint8_t GPIO_read_pin(GPIO_t *GPIO_port, uint8_t pin_number);
+uint8_t GPIO_read_pin(GPIO_t *GPIO_port, uint8_t pin_number);
 
 uint16_t GPIO_read_port(GPIO_t *GPIO_port);
 
