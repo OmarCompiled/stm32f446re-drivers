@@ -1,4 +1,5 @@
 "./Drivers/Src/stm32f446xx_gpio.o"
+"./Drivers/Src/stm32f446xx_i2c.o"
 "./Drivers/Src/stm32f446xx_nvic.o"
 "./Src/button_interrupt.o"
 "./Src/syscalls.o"

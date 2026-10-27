@@ -197,6 +197,10 @@ typedef struct {
 #define GPIOG ((GPIO_t *)GPIOG_BASE)
 #define GPIOH ((GPIO_t *)GPIOH_BASE)
 
+#define I2C1 ((I2C_t*)I2C1_BASE)
+#define I2C2 ((I2C_t*)I2C2_BASE)
+#define I2C3 ((I2C_t*)I2C3_BASE)
+
 #define RCC ((RCC_t *)RCC_BASE)
 
 #define EXTI ((EXTI_t *)EXTI_BASE)
@@ -217,14 +221,14 @@ typedef struct {
 #define RCC_AHB1ENR_GPIOGEN (0x1U << 6)
 #define RCC_AHB1ENR_GPIOHEN (0x1U << 7)
 
-#define RCC_AHB1RSTR_GPIOAEN (0x1U << 0)
-#define RCC_AHB1RSTR_GPIOBEN (0x1U << 1)
-#define RCC_AHB1RSTR_GPIOCEN (0x1U << 2)
-#define RCC_AHB1RSTR_GPIODEN (0x1U << 3)
-#define RCC_AHB1RSTR_GPIOEEN (0x1U << 4)
-#define RCC_AHB1RSTR_GPIOFEN (0x1U << 5)
-#define RCC_AHB1RSTR_GPIOGEN (0x1U << 6)
-#define RCC_AHB1RSTR_GPIOHEN (0x1U << 7)
+#define RCC_AHB1RSTR_GPIOARST (0x1U << 0)
+#define RCC_AHB1RSTR_GPIOBRST (0x1U << 1)
+#define RCC_AHB1RSTR_GPIOCRST (0x1U << 2)
+#define RCC_AHB1RSTR_GPIODRST (0x1U << 3)
+#define RCC_AHB1RSTR_GPIOERST (0x1U << 4)
+#define RCC_AHB1RSTR_GPIOFRST (0x1U << 5)
+#define RCC_AHB1RSTR_GPIOGRST (0x1U << 6)
+#define RCC_AHB1RSTR_GPIOHRST (0x1U << 7)
 
 /*
  * RCC I2C bit definitions
@@ -233,6 +237,9 @@ typedef struct {
 #define RCC_APB1ENR_I2C2EN (0x1U << 22)
 #define RCC_APB1ENR_I2C3EN (0x1U << 23)
 
+#define RCC_APB1RSTR_I2C1RST (0x1U << 21)
+#define RCC_APB1RSTR_I2C2RST (0x1U << 22)
+#define RCC_APB1RSTR_I2C3RST (0x1U << 23)
 /*
  * RCC SPI bit definitions
  */
@@ -320,50 +327,68 @@ typedef struct {
 
 #define RCC_GPIOA_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOAEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOAEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOARST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOARST);                            \
   } while (0)
 
 #define RCC_GPIOB_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOBEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOBEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOBRST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOBRST);                            \
   } while (0)
 
 #define RCC_GPIOC_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOCEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIODEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOCRST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIODRST);                            \
   } while (0)
 
 #define RCC_GPIOD_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIODEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIODEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIODRST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIODRST);                            \
   } while (0)
 
 #define RCC_GPIOE_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOEEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOEEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOERST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOERST);                            \
   } while (0)
 
 #define RCC_GPIOF_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOFEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOFEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOFRST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOFRST);                            \
   } while (0)
 
 #define RCC_GPIOG_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOGEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOGEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOGRST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOGRST);                            \
   } while (0)
 
 #define RCC_GPIOH_RESET()                                                      \
   do {                                                                         \
-    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOHEN);                              \
-    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOHEN);                            \
+    SET_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOHRST);                              \
+    CLEAR_BIT(RCC->AHB1RSTR, RCC_AHB1RSTR_GPIOHRST);                            \
+  } while (0)
+
+#define RCC_I2C1_RESET()                                                   	\
+  do {                                                                     	\
+    SET_BIT(RCC->APB1RSTR, RCC_APB1RSTR_I2C1RST);                          \
+    CLEAR_BIT(RCC->APB1RSTR, RCC_APB1RSTR_I2C1RST);                        \
+  } while (0)
+
+#define RCC_I2C2_RESET()                                                   	\
+  do {                                                                     	\
+    SET_BIT(RCC->APB1RSTR, RCC_APB1RSTR_I2C2RST);                          \
+    CLEAR_BIT(RCC->APB1RSTR, RCC_APB1RSTR_I2C2RST);                        \
+  } while (0)
+
+#define RCC_I2C3_RESET()                                                   	\
+  do {                                                                     	\
+    SET_BIT(RCC->APB1RSTR, RCC_APB1RSTR_I2C3RST);                          \
+    CLEAR_BIT(RCC->APB1RSTR, RCC_APB1RSTR_I2C3RST);                        \
   } while (0)
 
 #include "stm32f446xx_nvic.h" // since the NVIC is a general peripheral
