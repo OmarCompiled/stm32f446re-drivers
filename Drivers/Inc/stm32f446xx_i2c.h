@@ -33,21 +33,21 @@ typedef enum {
 	LAST
 } I2C_CR2_bits;
 
-typedef enum {
-
-} I2C_SR1_bits;
-
-typedef enum {
-	
-} I2C_SR2_bits;
-
-typedef enum {
-
-} I2C_CCR_bits;
-
-typedef enum {
-
-} I2C_speed;
+//typedef enum {
+//
+//} I2C_SR1_bits;
+//
+//typedef enum {
+//
+//} I2C_SR2_bits;
+//
+//typedef enum {
+//
+//} I2C_CCR_bits;
+//
+//typedef enum {
+//
+//} I2C_speed;
 
 typedef enum {
 	I2C_AUTO_ACK,
@@ -55,7 +55,7 @@ typedef enum {
 } I2C_ack;
 
 typedef struct {
-	I2C_speed I2C_SCL_speed;	
+	I2C_speed I2C_SCL_speed;
 	uint8_t I2C_device_address;
 	uint8_t I2C_ack_control;
 	uint16_t I2C_FM_duty_cycle;
